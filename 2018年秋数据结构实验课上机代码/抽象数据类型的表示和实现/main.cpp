@@ -1,122 +1,128 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define    OK 1
+#define OK 1
 #define ERROR 0
 
 typedef int Status;
 
 /* 
-³éÏóÊı¾İÀàĞÍµÄ±íÊ¾ºÍÊµÏÖ
+æŠ½è±¡æ•°æ®ç±»å‹çš„è¡¨ç¤ºå’Œå®ç°
 
-Ò»¡¢ÊµÑéÄ¿µÄ
+ä¸€ã€å®éªŒç›®çš„
 
-1.¸´Ï°¹®¹ÌCÓïÑÔµÄ½á¹¹Ìå¡¢Ö¸Õë¡¢º¯Êı¡¢¶¯Ì¬·ÖÅäÄÚ´æµÈÖªÊ¶µã¡£
+1.å¤ä¹ å·©å›ºCè¯­è¨€çš„ç»“æ„ä½“ã€æŒ‡é’ˆã€å‡½æ•°ã€åŠ¨æ€åˆ†é…å†…å­˜ç­‰çŸ¥è¯†ç‚¹ã€‚
 
-2.ÕÆÎÕ³éÏóÊı¾İÀàĞÍµÄ¶¨Òå¡¢±íÊ¾ºÍÊµÏÖ£¬ÎªºóĞøÊµÑé´òºÃ»ù´¡¡£
+2.æŒæ¡æŠ½è±¡æ•°æ®ç±»å‹çš„å®šä¹‰ã€è¡¨ç¤ºå’Œå®ç°ï¼Œä¸ºåç»­å®éªŒæ‰“å¥½åŸºç¡€ã€‚
 
-¶ş¡¢ÊµÑéÄÚÈİ
+äºŒã€å®éªŒå†…å®¹
 
-»ù±¾ÒªÇó£º
+åŸºæœ¬è¦æ±‚ï¼š
 
-Éè¼ÆÊµÏÖ³éÏóÊı¾İÀàĞÍ¡°ÈıÔª×é¡±¡£Ã¿¸öÈıÔª×éÓÉÈÎÒâÈı¸öÊµÊıµÄĞòÁĞ¹¹³É£¬»ù±¾²Ù×÷°üÀ¨£º´´½¨Ò»¸öÈıÔª×é£¬È¡ÈıÔª×éµÄÈÎÒâÒ»¸ö·ÖÁ¿£¬ÖÃÈıÔª×éµÄÈÎÒâÒ»¸ö·ÖÁ¿£¬ÇóÈıÔª×éµÄ×î´ó·ÖÁ¿£¬ÇóÈıÔª×éµÄ×îĞ¡·ÖÁ¿£¬ÏÔÊ¾ÈıÔª×é£¬Ïú»ÙÈıÔª×éµÈ¡£
+è®¾è®¡å®ç°æŠ½è±¡æ•°æ®ç±»å‹â€œä¸‰å…ƒç»„â€ã€‚æ¯ä¸ªä¸‰å…ƒç»„ç”±ä»»æ„ä¸‰ä¸ªå®æ•°çš„åºåˆ—æ„æˆï¼ŒåŸºæœ¬æ“ä½œåŒ…æ‹¬ï¼šåˆ›å»ºä¸€ä¸ªä¸‰å…ƒç»„ï¼Œå–ä¸‰å…ƒç»„çš„ä»»æ„ä¸€ä¸ªåˆ†é‡ï¼Œç½®ä¸‰å…ƒç»„çš„ä»»æ„ä¸€ä¸ªåˆ†é‡ï¼Œæ±‚ä¸‰å…ƒç»„çš„æœ€å¤§åˆ†é‡ï¼Œæ±‚ä¸‰å…ƒç»„çš„æœ€å°åˆ†é‡ï¼Œæ˜¾ç¤ºä¸‰å…ƒç»„ï¼Œé”€æ¯ä¸‰å…ƒç»„ç­‰ã€‚
 
-Ñ¡×÷ÄÚÈİ£º
+ä¸‰ã€å®éªŒæ­¥éª¤
 
-ÊµÏÖÁ½¸öÈıÔª×éµÄ¶ÔÓ¦·ÖÁ¿Ïà¼Ó»òÏà¼õ£¬¸øÈıÔª×éµÄ¸÷·ÖÁ¿Í¬³ËÒ»¸ö±ÈÀıÒò×ÓµÈ²Ù×÷¡£
+1ã€å†™å‡ºâ€œä¸‰å…ƒç»„ ï¼ˆTripletï¼‰â€æŠ½è±¡æ•°æ®ç±»å‹çš„å®šä¹‰ï¼Œå³æ•°æ®å¯¹è±¡ã€æ•°æ®å…³ç³»ã€åŸºæœ¬æ“ä½œ
 
-Èı¡¢ÊµÑé²½Öè
+2ã€ç»ƒä¹ æŠ½è±¡æ•°æ®ç±»å‹çš„è¡¨ç¤ºå’Œå®ç°ã€‚
 
-1¡¢Ğ´³ö¡°ÈıÔª×é £¨Triplet£©¡±³éÏóÊı¾İÀàĞÍµÄ¶¨Òå£¬¼´Êı¾İ¶ÔÏó¡¢Êı¾İ¹ØÏµ¡¢»ù±¾²Ù×÷
+æ–¹æ³•ï¼šç”¨æŒ‡é’ˆæè¿°â€œä¸‰å…ƒç»„â€ï¼Œè¦æ±‚ï¼šåŠ¨æ€åˆ†é…å†…å­˜ã€‚
 
-2¡¢Á·Ï°³éÏóÊı¾İÀàĞÍµÄ±íÊ¾ºÍÊµÏÖ¡£
-
-·½·¨£ºÓÃÖ¸ÕëÃèÊö¡°ÈıÔª×é¡±£¬ÒªÇó£º¶¯Ì¬·ÖÅäÄÚ´æ¡£
-
-3¡¢Íê³ÉËùÓĞ»ù±¾²Ù×÷µÄCÓïÑÔÊµÏÖÓëµ÷ÓÃ£¬²¢Ğ´²âÊÔ³ÌĞò¡£
+3ã€å®Œæˆæ‰€æœ‰åŸºæœ¬æ“ä½œçš„Cè¯­è¨€å®ç°ä¸è°ƒç”¨ï¼Œå¹¶å†™æµ‹è¯•ç¨‹åºã€‚
 */
 
-
-
 typedef float ElemType;
-typedef struct{
-ElemType e[3];
-}Triplet;
+typedef struct
+{
+	ElemType e[3];
+} Triplet;
 
-Status initTriplet(Triplet &T,ElemType v0,ElemType v1,ElemType v2); //¹¹ÔìÈıÔª×éT£¬ÔªËØe1£¬e2ºÍe3·Ö±ğ±»¸³Óè²ÎÊıv1,v2,v3µÄÖµ
-Status destroyTriplet(Triplet &T); //Ïú»ÙÈıÔª×éT
-Status getElem(Triplet T,int i,ElemType &e); //ÓÃe·µ»ØÈıÔª×éTµÄµÚi¸öÔªËØ
-Status putElem(Triplet &T,int i,ElemType e); // ÓÃeÖµÈ¡´úÈıÔª×éTµÄµÚi¸öÔªËØ
-Status isAscending(Triplet T); //Èç¹ûÈıÔª×éTµÄÈı¸öÔªËØ°´ÉıĞòÅÅÁĞ£¬Ôò·µ»ØTRUE£»·ñÔò·µ»ØFALSE
-Status isDescending(Triplet T); //Èç¹ûÈıÔª×éTµÄÈı¸öÔªËØ°´½µĞòÅÅÁĞ£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
-ElemType getMax(Triplet T,ElemType &e); //ÓÃe·µ»ØTµÄ3¸öÔªËØÖĞµÄ×î´óÖµ
-ElemType getMin(Triplet T,ElemType &e); //ÓÃe·µ»ØTµÄ3¸öÔªËØÖĞµÄ×îĞ¡Öµ
+Status initTriplet(Triplet &T, ElemType v0, ElemType v1, ElemType v2); //æ„é€ ä¸‰å…ƒç»„Tï¼Œå…ƒç´ e1ï¼Œe2å’Œe3åˆ†åˆ«è¢«èµ‹äºˆå‚æ•°v1,v2,v3çš„å€¼
+Status destroyTriplet(Triplet &T);									   //é”€æ¯ä¸‰å…ƒç»„T
+Status getElem(Triplet T, int i, ElemType &e);						   //ç”¨eè¿”å›ä¸‰å…ƒç»„Tçš„ç¬¬iä¸ªå…ƒç´ 
+Status putElem(Triplet &T, int i, ElemType e);						   // ç”¨eå€¼å–ä»£ä¸‰å…ƒç»„Tçš„ç¬¬iä¸ªå…ƒç´ 
+Status isAscending(Triplet T);										   //å¦‚æœä¸‰å…ƒç»„Tçš„ä¸‰ä¸ªå…ƒç´ æŒ‰å‡åºæ’åˆ—ï¼Œåˆ™è¿”å›TRUEï¼›å¦åˆ™è¿”å›FALSE
+Status isDescending(Triplet T);										   //å¦‚æœä¸‰å…ƒç»„Tçš„ä¸‰ä¸ªå…ƒç´ æŒ‰é™åºæ’åˆ—ï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
+ElemType getMax(Triplet T, ElemType &e);							   //ç”¨eè¿”å›Tçš„3ä¸ªå…ƒç´ ä¸­çš„æœ€å¤§å€¼
+ElemType getMin(Triplet T, ElemType &e);							   //ç”¨eè¿”å›Tçš„3ä¸ªå…ƒç´ ä¸­çš„æœ€å°å€¼
 
-Status initTriplet(Triplet &T,ElemType v0,ElemType v1,ElemType v2){
-	T.e[0]=v0;
-	T.e[1]=v1;
-	T.e[2]=v2;
+Status initTriplet(Triplet &T, ElemType v0, ElemType v1, ElemType v2)
+{
+	T.e[0] = v0;
+	T.e[1] = v1;
+	T.e[2] = v2;
 	return OK;
 }
 
-Status destroyTriplet(Triplet &T){
+Status destroyTriplet(Triplet &T)
+{
 	return OK;
 }
 
-Status getElem(Triplet T,int i,ElemType &e){
-	if(i<1||i>3)
-	return ERROR;
-	else e=T.e[i-1];
-	return OK;
-}
-
-Status putElem(Triplet &T,int i,ElemType e){
-	if(i<1||i>3)
+Status getElem(Triplet T, int i, ElemType &e)
+{
+	if (i < 1 || i > 3)
 		return ERROR;
-	else 
-		T.e[i-1]=e;
+	else
+		e = T.e[i - 1];
 	return OK;
 }
 
-Status isAscending(Triplet T){
-	return (T.e[0]<=T.e[1]) && (T.e[1]<=T.e[2]);
-} 
+Status putElem(Triplet &T, int i, ElemType e)
+{
+	if (i < 1 || i > 3)
+		return ERROR;
+	else
+		T.e[i - 1] = e;
+	return OK;
+}
 
-Status isDescending(Triplet T){
-	return (T.e[0]>=T.e[1]) && (T.e[1]>=T.e[2]);
-} 
+Status isAscending(Triplet T)
+{
+	return (T.e[0] <= T.e[1]) && (T.e[1] <= T.e[2]);
+}
 
-ElemType getMax(Triplet T,ElemType &e){
-	if(T.e[0]>T.e[1])
-		e=T.e[0];
-   	else
-		e=T.e[1];
-    if(T.e[2]>e)
-       e=T.e[2];
-    return e;
-} 
+Status isDescending(Triplet T)
+{
+	return (T.e[0] >= T.e[1]) && (T.e[1] >= T.e[2]);
+}
 
-ElemType getMin(Triplet T,ElemType &e){
-	if(T.e[0]<T.e[1])
-		e=T.e[0];
-   	else
-		e=T.e[1];
-    if(T.e[2]<e)
-       e=T.e[2];
-    return e;
-} 
+ElemType getMax(Triplet T, ElemType &e)
+{
+	if (T.e[0] > T.e[1])
+		e = T.e[0];
+	else
+		e = T.e[1];
+	if (T.e[2] > e)
+		e = T.e[2];
+	return e;
+}
 
+ElemType getMin(Triplet T, ElemType &e)
+{
+	if (T.e[0] < T.e[1])
+		e = T.e[0];
+	else
+		e = T.e[1];
+	if (T.e[2] < e)
+		e = T.e[2];
+	return e;
+}
 
-int main(int argc, char** argv){
+int main(int argc, char **argv)
+{
 	Triplet T;
 	Status flag;
-	ElemType v0,v1,v2,e;
-	printf("ÇëÊäÈëÈıÔª×éµÄÈı¸öÖµv0,v1,v2:\n");
-	scanf("%f,%f,%f",&v0,&v1,&v2);
-	flag=initTriplet(T,v0,v1,v2);
-	printf("µ÷ÓÃ³õÊ¼»¯º¯Êıºó£¬flag=%d,TµÄÈı¸öÖµÎª%4.2f,%4.2f,%4.2f\n",flag,T.e[0],T.e[1],T.e[2]);
-	if(isAscending(T))	printf("¸ÃÈıÔª×éÔªËØÎªÉıĞò\n");
-	if(isDescending(T))	printf("¸ÃÈıÔª×éÔªËØÎª½µĞò\n"); 
-	printf("¸ÃÈıÔª×éÖĞµÄ×î´óÖµÎª£º%4.2f,×îĞ¡ÖµÎª£º%4.2f",getMax(T,e),getMin(T,e));
+	ElemType v0, v1, v2, e;
+	printf("è¯·è¾“å…¥ä¸‰å…ƒç»„çš„ä¸‰ä¸ªå€¼v0,v1,v2:\n");
+	scanf("%f,%f,%f", &v0, &v1, &v2);
+	flag = initTriplet(T, v0, v1, v2);
+	printf("è°ƒç”¨åˆå§‹åŒ–å‡½æ•°åï¼Œflag=%d,Tçš„ä¸‰ä¸ªå€¼ä¸º%4.2f,%4.2f,%4.2f\n", flag, T.e[0], T.e[1], T.e[2]);
+	if (isAscending(T))
+		printf("è¯¥ä¸‰å…ƒç»„å…ƒç´ ä¸ºå‡åº\n");
+	if (isDescending(T))
+		printf("è¯¥ä¸‰å…ƒç»„å…ƒç´ ä¸ºé™åº\n");
+	printf("è¯¥ä¸‰å…ƒç»„ä¸­çš„æœ€å¤§å€¼ä¸ºï¼š%4.2f,æœ€å°å€¼ä¸ºï¼š%4.2f", getMax(T, e), getMin(T, e));
 	return OK;
 }
