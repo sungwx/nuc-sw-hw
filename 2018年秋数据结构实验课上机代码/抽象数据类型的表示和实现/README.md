@@ -18,4 +18,4 @@
     方法：用指针描述“三元组”，要求：动态分配内存。 
 3. 完成所有基本操作的C语言实现与调用，并写测试程序。
 
-**[实验源代码在这里]()**
+**[实验源代码在这里](https://github.com/sungwx/nuc-sw-hw/blob/master/2018%E5%B9%B4%E7%A7%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E9%AA%8C%E8%AF%BE%E4%B8%8A%E6%9C%BA%E4%BB%A3%E7%A0%81/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%AE%9E%E7%8E%B0/main.cpp)**
